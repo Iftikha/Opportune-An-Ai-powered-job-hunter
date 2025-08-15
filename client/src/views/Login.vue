@@ -13,19 +13,20 @@
             <div class="icon-container">
                 <Icon icon="ri:threads-line" />
             </div>
-            <input type="email" name="email" v-model="email" id="email" required placeholder="Email" class="inp">
+            <input type="email" v-model="email" name="email" id="email" required placeholder="Email" class="inp">
         </div>
         <div class="input-container">
             <div class="icon-container">
                 <Icon icon="ri:lock-line" />
             </div>
-            <input type="password" name="password" v-model="password" id="password" required placeholder="Password" class="inp">
+            <input type="password" v-model="password"  name="password" id="password" required placeholder="Password" :class="['inp', { error : showError}]">
         </div>
+        <p class="error-msg" v-if="showError">{{ errorMessage }}</p>
         <div class="input-container left-aligned">
             <p>Don't have an account? <router-link to="/register">Sign up</router-link></p>
         </div>
         <div class="input-container">
-            <button type="submit" class="btn btn-p">Log In</button>
+            <button type="submit" class="btn btn-p" :disabled="loading">{{ loading ? "Logging In..." : "Log In" }}</button>
         </div>
     </form>
 </section>
@@ -35,7 +36,7 @@
 <script>
 import { Icon } from '@iconify/vue';
 import Footer from '../components/Footer.vue';
-import api from '../api/api';
+import axios from 'axios';
 
 export default{
     name: "LogIn",
@@ -47,28 +48,37 @@ export default{
         return{
             email: "",
             password: "",
+            loading: false,
+            showError: false,
+            errorMessage: "",
         }
     },
     methods: {
         async login(){
-            if(!this.email || !this.$.password){
+            if(!this.email || !this.password){
                 return;
             }
+            console.log(this.email, this.password);
+            this.loading = true;
             try{
-                const res = await api.post("/api/v1/auth/login",{
+                const res = await axios.post("https://opportuneaipoweredbackend.vercel.app/api/v1/auth/login",{
                     password: this.password,
                     email: this.email,
                 }, {
                     withCredentials: true,
                 });
-                if(res.data.error){
-                    alert(res.data.error);
-                }
+                console.log(res);
                 localStorage.setItem('token', res.data.token);
                 this.$router.push('/');
+                this.loading= false;
             }catch(err){
-                console.log(err);
-                alert("Log in failed!");
+                if(err.response && err.response.data && err.response.data.error){
+                    this.showError = true;
+                    this.errorMessage = err.response.data.error;
+                }else{
+                    this.errorMessage = "Log in failed! Please try again!";
+                }
+                this.loading = false;
             }
         }
     }
@@ -113,6 +123,10 @@ export default{
 .selector{
     width: 176px;
 }
+.error-msg{
+    font-size: 0.75rem;
+    color: red;
+}
 .btn-p{
     width: 100%;
 }
@@ -121,6 +135,9 @@ export default{
     justify-content: center;
     align-items: center;
     position: relative;
+}
+.error{
+    border: 1px solid red;
 }
 .left-aligned{
     justify-content: start;
