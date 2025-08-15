@@ -47,7 +47,8 @@ const registerUser = async (req, res) => {
 
         return res.status(201).json({ 
             message: "User created successfully.", 
-            user: { id: userCreated._id, email: userCreated.email }
+            user: { id: userCreated._id, email: userCreated.email },
+            token: jwtToken,
         });
 
     } catch (err) {
@@ -82,7 +83,7 @@ const loginUser = async (req, res) => {
             sameSite: "none"
         });
 
-        return res.status(200).json({ message: "Log in successful.", userFound: userExists });
+        return res.status(200).json({ message: "Log in successful.", userFound: userExists, token: token });
     }catch(err){
         console.log("Error while logging in: " + err);
         return res.status(500).json({ error: "Internal server error." });
