@@ -18,12 +18,25 @@ export default {
             newProfile: false,
         }
     },
-    created(){
-        this.getProfileInfo();
+    async created(){
+        await this.getCurrentUserInfo();
+        await this.getProfileInfo();
     },
     methods:{
-        getProfileInfo(){
-            axios.get(`https://opportuneaipoweredbackend.vercel.app/api/v1/profile/${this.id}`,{
+        async getCurrentUserInfo(){
+            await axios.get(`https://opportuneaipoweredbackend.vercel.app/api/v1/me`,{
+                withCredentials: true,
+            })
+                .then( res => {
+                    console.log(res.data);
+                })
+                .catch( err => {
+                    console.log(err.response);
+                })
+        },
+
+        async getProfileInfo(){
+            await axios.get(`https://opportuneaipoweredbackend.vercel.app/api/v1/profile/${this.id}`,{
                 withCredentials: true,
             })
                 .then(res => {
