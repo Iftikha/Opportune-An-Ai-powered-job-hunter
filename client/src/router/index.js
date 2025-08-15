@@ -5,6 +5,7 @@ import Login from "../views/Login.vue";
 import Jobs from "../views/Jobs.vue";
 import Ai from "../views/Ai.vue";
 import JobDetail from "../views/JobDetail.vue";
+import ProfileDetail from "../views/ProfileDetail.vue";
 
 const routes = [
     {
@@ -37,6 +38,12 @@ const routes = [
         path: '/ai/recommended',
         name: "Recommendation",
         component: Ai
+    },
+    {
+        path: "/users/profile/:id",
+        name: "ProfileDetails",
+        component: ProfileDetail,
+        props: true,
     }
 ]
 

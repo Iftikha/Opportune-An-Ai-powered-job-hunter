@@ -5,7 +5,7 @@ const User = require('../models/User.model');
 
 const isNewProfile = async (req, res, next) => {
     try {
-        const token = req.header("Authorization")?.replace("Bearer ", "");
+        const token = req.cookie.token;
         if (!token) {
             return res.status(401).json({ error: "Access Denied. No token provided." });
         }
@@ -44,7 +44,7 @@ const isNewProfile = async (req, res, next) => {
 
 const authProfile = async (req, res, next) => {
     try {
-        const token = req.header("Authorization")?.replace("Bearer ", "");
+        const token = req.cookie.token;
         if (!token) {
             return res.status(401).json({ error: "Access Denied. No token provided." });
         }

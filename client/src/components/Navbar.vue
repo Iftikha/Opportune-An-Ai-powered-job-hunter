@@ -21,7 +21,7 @@
             <router-link to="/register"><button class="btn btn-p">Get started</button></router-link>
         </div>
         <div class="right">
-            <router-link class="img-cont" to="/users/profile">
+            <router-link class="img-cont" :to="`/users/profile/${userId}`">
                 <img src="../assets/Opportune.png" class="img-profile" alt="">
             </router-link>
         </div>
@@ -67,6 +67,7 @@ export default{
         return {
             index : 0,
             isloggedIn: false,
+            userId: "",
         }
     },
     methods:{
@@ -84,21 +85,20 @@ export default{
     },
     methods: {
         displayToken(){
-            console.log(localStorage.getItem('token'));
             const token = localStorage.getItem('token');
             if(token){
                 const res = axios.get("https://opportuneaipoweredbackend.vercel.app/api/v1/me",{
                     withCredentials: true,
                 })
                             .then( res => {
-                                console.log(res);
+                                this.userId = res.data.userId;
+                                // console.log(res);
                             })
                             .catch( err => {
                                 console.log(err);
                             })
                 this.isloggedIn = true;
             }
-            console.log(this.isloggedIn);
         }
     },
 }
