@@ -56,6 +56,7 @@
 
 <script>
 import { Icon } from '@iconify/vue';
+import axios from 'axios';
 
 export default{
     name: "Navbar",
@@ -86,6 +87,15 @@ export default{
             console.log(localStorage.getItem('token'));
             const token = localStorage.getItem('token');
             if(token){
+                const res = axios.get("https://opportuneaipoweredbackend.vercel.app/api/v1/me",{
+                    withCredentials: true,
+                })
+                            .then( res => {
+                                console.log(res);
+                            })
+                            .catch( err => {
+                                console.log(err);
+                            })
                 this.isloggedIn = true;
             }
             console.log(this.isloggedIn);
