@@ -1,6 +1,8 @@
 <template>
 <section>
-    Profile Details page
+    <div class="createProfileForm" v-if="newProfile">
+        <h1>This is new profile</h1>
+    </div>
 </section>
 </template>
 
@@ -10,6 +12,12 @@ import axios from 'axios';
 export default {
     props: ['id'],
     name: "Profile",
+    data(){
+        return {
+            profileFound: {},
+            newProfile: false,
+        }
+    },
     created(){
         this.getProfileInfo();
     },
@@ -19,14 +27,25 @@ export default {
                 withCredentials: true,
             })
                 .then(res => {
-                    console.log(res);
+                    this.profileFound = res.data.profile;
                 })
                 .catch( err => {
-                    console.log(err);
+                    if(err.response && err.response.data && err.response.data.message){
+                        this.profileFound = { 
+                            status: err.response.data.status,
+                            message: err.response.data.message
+                        }
+                    }
                 })
+        },
+        checkIfProfileExists(){
+            if(this.profileFound.status && this.profileFound.status === 404){
+                this.newProfile = true;
+            }
         }
     }
 }
+
 </script>
 
 <style scoped>

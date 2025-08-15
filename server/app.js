@@ -30,7 +30,6 @@ dbConfig();
 app.use("/api/v1", authRoutes);
 app.use("/api/v1", jobRoutes);
 app.use("/api/v1", profileRoutes);
-app.get("/api/v1/me", getUserInfo);
 app.get("/", (req, res) => {
   res.send({ message: "Hello World! This is opportune." });
 });

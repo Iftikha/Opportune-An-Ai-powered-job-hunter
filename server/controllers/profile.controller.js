@@ -142,16 +142,16 @@ const updateProfile = async (req, res) => {
 };
 
 const viewProfile = async (req, res) => {
-    const id = req.params.id;
+    const id = req.userExists._id;
     try {
-        let profileFound = await Employee.findById(id);
+        let profileFound = await Employee.findOne({ userId: userExists._id});
         if (!profileFound) {
-            profileFound = await Employeer.findById(id);
+            profileFound = await Employeer.findOne({ userId: userExists._id});
             if (!profileFound) {
                 return res.status(404).json({ message: "Profile not found." });
             }
         }
-        res.status(200).json({ message: "Profile found successfully.", profile: profileFound });
+        res.status(200).json({ message: "Profile found successfully.", profile: profileFound, user: userExists });
     } catch (err) {
         res.status(500).json({ error: "Internal server error: Failed to get profile." });
     }
