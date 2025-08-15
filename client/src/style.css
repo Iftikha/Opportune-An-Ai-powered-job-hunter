@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&family=Space+Grotesk:wght@300..700&display=swap');
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.space-grotesk {
+  font-family: "Space Grotesk", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.inter {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.outfit {
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+body{
+  font-family: "Inter", sans-serif;
+  font-size: 18px;
+}
+
+h1, h2, h3, h4, h5, h6{
+  font-family: "Outfit", sans-serif;
+  font-size: 24px;
+  line-height: 24px;
+}
+p,a{
+  font-size: 18px;
+}
+.logoSpec{
+  font-family: "Space Grotesk", sans-serif;
+  
+}
+.btn{
+  padding: 12px 8px;
+  font-size: 0.9rem;
+    font-weight: 600;
+    /* width: 125px; */
+    transition: all 0.4s ease;
+    cursor: pointer;
+}
+.btn-p{
+  background-color: #00A651;
+  color: white;
+  border: 2px solid #00A651;
+  border-radius: 8px;
+}
+.btn-p:hover{
+  background-color: transparent;
+  color: black;
+}
+.btn-s{
+  border: 2px solid #00A651;
+  border-radius: 8px;
+  background-color: transparent;
+}
+.btn-s:hover{
+  background-color: #00A651;
+  color: white;
+}
+.btn-trans{
+  background-color: transparent;
+  border: none;
+}
+.highlight{
+  font-family: "Space Grotesk", sans-serif;
+  color: #00A651;
+}
+.highlight-sm{
+  color: #00A651;
+}
+.muted-sm{
+  font-size: 1rem;
+  color: #808080;
+  font-weight: 300;
+}
+.muted-md{
+  color: #808080;
+  font-weight: 300;
+}
+.heading-sm{
+  font-size: 2rem;
+  line-height: 2rem;
+}
+.highlight-xsm{
+    color: #00A651
+}
