@@ -29,6 +29,14 @@ dbConfig();
 app.use("/api/v1", authRoutes);
 app.use("/api/v1", jobRoutes);
 app.use("/api/v1", profileRoutes);
+app.get("/api/v1/me", (req, res) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.status(401).json({ loggedIn: false });
+  }
+  // token verify logic...
+  res.json({ loggedIn: true, user: { name: "Iftikhar" } });
+});
 app.get("/", (req, res) => {
   res.send({ message: "Hello World! This is opportune." });
 });

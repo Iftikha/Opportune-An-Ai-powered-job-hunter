@@ -63,7 +63,7 @@
             <p>Already have an account? <router-link to="/login">Log in</router-link></p>
         </div>
         <div class="input-container">
-            <button class="btn btn-p" @click="register">Sign Up</button>
+            <button class="btn btn-p" :disabled="loading" >{{ loading ? 'Signing up...' : 'Sign Up'}}</button>
         </div>
     </form>
 </section>
@@ -90,6 +90,7 @@ export default{
             accountType: "",
             gender: "",
             showPassError: false,
+            loading: false,
         }
     },
     methods: {
@@ -101,8 +102,10 @@ export default{
                 this.showPassError = true;
                 return;
             }
+            
+            this.loading = true; // loader start
             try {
-                const res = await axios.post("http://localhost:3000/api/v1/auth/register", {
+                const res = await axios.post("https://opportuneaipoweredbackend.vercel.app/api/v1/auth/register", {
                     email: this.email,
                     password: this.password,
                     confirmPassword: this.confirmPassword,
@@ -113,8 +116,6 @@ export default{
                     withCredentials: true,
                 });
                 localStorage.setItem('token', res.data.token);
-                console.log("Success");
-                alert("Signup Successful");
                 this.$router.push('/');
             } catch (err) {
                 console.log(err);

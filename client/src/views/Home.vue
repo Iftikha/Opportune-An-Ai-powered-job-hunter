@@ -71,7 +71,7 @@ export default {
     },
     methods: {
         fetch3Jobs(){
-            const res = axios.get("http://localhost:3000/api/v1/jobs")
+            const res = axios.get("https://opportuneaipoweredbackend.vercel.app/api/v1/jobs")
                         .then(res => {
                             for(var i = 0; i < 3; i++){
                                 this.Jobs[i] = res.data.jobs[i];
