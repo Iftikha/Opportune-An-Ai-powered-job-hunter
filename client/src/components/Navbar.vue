@@ -16,9 +16,14 @@
                 </li>
             </ul>
         </div>
-        <div class="right">
+        <div class="right" v-if="!isloggedIn">
             <router-link to="/login"><button class="btn btn-s">Sign in</button></router-link>
             <router-link to="/register"><button class="btn btn-p">Get started</button></router-link>
+        </div>
+        <div class="right">
+            <router-link class="img-cont" to="/users/profile">
+                <img src="../assets/Opportune.png" class="img-profile" alt="">
+            </router-link>
         </div>
     </nav>
     <nav class="navbar mobile">
@@ -39,10 +44,10 @@
                 <li class="menu-link">
                     <router-link to="/ai/recommended"><Icon icon="ri:gemini-line" />Ai Recommendation</router-link>
                 </li>
-                <li class="menu-link">
+                <li class="menu-link" v-if="!isloggedIn">
                     <router-link to="/login"><Icon icon="prime:sign-in" />Sign in</router-link>
                 </li>
-                <li class="menu-link">
+                <li class="menu-link" v-if="!isloggedIn">
                     <router-link to="/register"><Icon icon="prime:arrow-up-right" />Get started</router-link>
                 </li>
             </ul>
@@ -60,6 +65,7 @@ export default{
     data(){
         return {
             index : 0,
+            isloggedIn: false,
         }
     },
     methods:{
@@ -78,6 +84,11 @@ export default{
     methods: {
         displayToken(){
             console.log(localStorage.getItem('token'));
+            const token = localStorage.getItem('token');
+            if(token){
+                this.isloggedIn = true;
+            }
+            console.log(this.isloggedIn);
         }
     },
 }
@@ -116,7 +127,23 @@ a:hover{
 .logoSpec{
     font-size: 2rem;
 }
-
+.img-cont{
+    width: 35px;
+    height: 35px;
+    overflow: hidden;
+    border-radius: 50%;
+    filter: opacity(0.75);
+    transition: all 0.3s ease;
+}
+.img-cont:hover{
+    filter: opacity(1);
+}
+.img-profile{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
 ul{
     display: flex;
     justify-content: center;

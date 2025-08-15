@@ -43,7 +43,11 @@
             </div>
             <div class="right-skills-section">
                 <h3>Skills Required</h3>
-                <p class="tag" v-for="skill in Job.skillsRequired" :key="skill">{{ skill }}</p>
+                <p class="tag">
+                    <span v-for="skill in Job.skillsRequired" :key="skill">
+                        {{ skill }}<br/>
+                    </span>
+                </p>
             </div>
         </div>
     </section>
@@ -69,10 +73,9 @@ export default{
     },
     methods: {
         fetchDetails(){
-            const res = axios.get(`http://localhost:3000/api/v1/jobs/${this.id}`)
+            const res = axios.get(`https://opportuneaipoweredbackend.vercel.app/api/v1/jobs/${this.id}`)
                 .then(res => {
                     this.Job = res.data.job;
-                    console.log(this.Job);
                 })
                 .catch(err => {
                     console.log(err);
@@ -132,5 +135,9 @@ a{
     border-radius: 16px;
     border: 2px solid #ededed;
     width: 25%;
+}
+p{
+    padding: 16px 0;
+    line-height: 1.5rem;
 }
 </style>

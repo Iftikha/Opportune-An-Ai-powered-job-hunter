@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 const dbConfig = require("./config/db.config");
 const profileRoutes = require("./routes/profile.routes");
 const cors = require("cors");
+const getUserInfo = require("./controllers/info.controller");
 // const ImageKit = require('imagekit');
 // const getRecommendation = require('./controllers/ai.controller');
 
@@ -29,14 +30,7 @@ dbConfig();
 app.use("/api/v1", authRoutes);
 app.use("/api/v1", jobRoutes);
 app.use("/api/v1", profileRoutes);
-app.get("/api/v1/me", (req, res) => {
-  const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({ loggedIn: false });
-  }
-  // token verify logic...
-  res.json({ loggedIn: true, user: { name: "Iftikhar" } });
-});
+app.get("/api/v1/me", getUserInfo);
 app.get("/", (req, res) => {
   res.send({ message: "Hello World! This is opportune." });
 });
