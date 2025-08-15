@@ -44,12 +44,13 @@ const isNewProfile = async (req, res, next) => {
 
 const authProfile = async (req, res, next) => {
     try {
-        const token = req.cookie.token;
+        const token = req.cookies.token;
         if (!token) {
             return res.status(401).json({ error: "Access Denied. No token provided." });
         }
 
         const decode = jwt.verify(token, process.env.JWT_SECRET);
+        console.log("Decoded JWT:", decode); 
         const userExists = await User.findById(decode.id);
         if (!userExists) {
             return res.status(404).json({ error: "User not found." });
@@ -57,18 +58,17 @@ const authProfile = async (req, res, next) => {
 
         const accountType = userExists.accountType;
 
+        let profileFound;
         if (accountType === "employee") {
-            const profileFound = await Employee.findOne({ userId: userExists._id });
-            if (!profileFound) {
-                return res.status(404).json({ message: "Profile not found." });
-            }
+            profileFound = await Employee.findOne({ userId: userExists._id });
         } else if (accountType === "employeer") {
-            const profileFound = await Employeer.findOne({ userId: userExists._id });
-            if (!profileFound) {
-                return res.status(404).json({ message: "Profile not found." });
-            }
+            profileFound = await Employeer.findOne({ userId: userExists._id });
         } else {
             return res.status(400).json({ error: "Invalid account type." });
+        }
+
+        if (!profileFound) {
+            return res.status(404).json({ message: "Profile not found." });
         }
 
         req.user = userExists;
@@ -76,6 +76,7 @@ const authProfile = async (req, res, next) => {
         next();
 
     } catch (err) {
+        console.error(err);
         res.status(401).json({ error: "Invalid token." });
     }
 };
