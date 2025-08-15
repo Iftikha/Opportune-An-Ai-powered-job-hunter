@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 
 const getUserInfo = async (req, res) => {
 
-    const lo
- token = req.cookies.token; // cookie me se token le
+    const token = req.cookies.token;
+
     if (!token) {
         return res.status(401).json({ error: "Token missing" });
     }
