@@ -16,6 +16,7 @@ const authUser = async (req, res, next) => {
     console.log("Decoded JWT:", decode);
     
     const user = await User.findById(decode.id);
+    console.log("User Found:" , user);
     if (!user) {
       return res.status(404).json({ error: "User not found." });
     }
