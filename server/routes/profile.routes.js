@@ -13,7 +13,7 @@ const profileRoutes = new express.Router();
 
 // Create Employee/Employeer Profile.
 
-profileRoutes.post('/profile/create', authUser, isNewProfile, upload.single('logo'), createProfile);
+profileRoutes.post('/profile/create', authUser, upload.single('logo'), createProfile);
 
 // Update Employee/Employeer Profile.
 

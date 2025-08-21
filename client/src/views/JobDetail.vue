@@ -29,7 +29,7 @@
             <button class="btn btn-p">
                 Apply Now
             </button>
-            <router-link :to="`/profile/${Job.userId}`">
+            <router-link :to="`/profile/${Job.userID}`">
                 <button class="btn btn-s">
                     <Icon icon="mingcute:arrow-right-up-line" style="font-size: 1.25rem;" />
                     View Company

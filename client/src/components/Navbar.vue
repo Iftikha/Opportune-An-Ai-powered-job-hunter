@@ -20,7 +20,7 @@
             <router-link to="/login"><button class="btn btn-s">Sign in</button></router-link>
             <router-link to="/register"><button class="btn btn-p">Get started</button></router-link>
         </div>
-        <div class="right">
+        <div class="right" v-if="isloggedIn">
             <router-link class="img-cont" :to="`/users/profile/${userId}`">
                 <img src="../assets/Opportune.png" class="img-profile" alt="">
             </router-link>
@@ -50,6 +50,9 @@
                 <li class="menu-link" v-if="!isloggedIn">
                     <router-link to="/register"><Icon icon="prime:arrow-up-right" />Get started</router-link>
                 </li>
+                <li class="menu-link" v-if="!isloggedIn">
+                    <router-link :to="`/users/profile/${userId}`"><Icon />Profile</router-link>
+                </li>
             </ul>
     </nav>
 </template>
@@ -77,30 +80,38 @@ export default{
         },
         checkLoggedIn(){
             const token = localStorage.getItem('token');
-            console.log(token);
-        }
-    },
-    created(){
-        this.displayToken();
-    },
-    methods: {
-        displayToken(){
-            const token = localStorage.getItem('token');
             if(token){
-                const res = axios.get("https://opportuneaipoweredbackend.vercel.app/api/v1/me",{
+                this.isloggedIn = true;
+                this.displayToken();
+            } else {
+                this.isloggedIn = false;
+            }
+        },
+        displayToken(){
+            if(this.isloggedIn){
+
+                const token = localStorage.getItem('token');
+                if(token){
+                    axios.get("https://opportuneaipoweredbackend.vercel.app/api/v1/me",{
                     withCredentials: true,
                 })
-                            .then( res => {
-                                this.userId = res.data.userId;
-                                // console.log(res);
-                            })
-                            .catch( err => {
-                                console.log(err);
-                            })
+                .then( res => {
+                    this.userId = res.data.user._id;
+                    // console.log(res);
+                })
+                .catch( err => {
+                    console.log(err);
+                })
                 this.isloggedIn = true;
+            }
+            } else {
+                this.isloggedIn = false;
             }
         }
     },
+    created(){
+        this.checkLoggedIn();
+    }
 }
 </script>
 

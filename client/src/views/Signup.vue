@@ -116,7 +116,10 @@ export default{
                     withCredentials: true,
                 });
                 localStorage.setItem('token', res.data.token);
+                const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toUTCString(); // 7 days expiry
+                document.cookie = `token=${res.data.token}; expires=${expires}; path=/;`;
                 this.$router.push('/');
+                this.loading = false; // loader end
             } catch (err) {
                 console.log(err);
             }
